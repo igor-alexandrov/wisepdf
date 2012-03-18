@@ -1,39 +1,39 @@
-require 'test_helper'
+require 'helper'
 
 HTML_DOCUMENT = "<html><body>Hello World</body></html>"
 
 # Provide a public accessor to the normally-private parse_options function
-class Pdf::Writer
+class Wisepdf::Writer
   public :parse_options
 end
 
 class WriterTest < Test::Unit::TestCase    
   context "Default configuration" do
     setup do
-      Pdf::Configuration.reset!
+      Wisepdf::Configuration.reset!
     end
     
     should 'read default configuration' do
-      assert_equal 'pdf.html', Pdf::Configuration.options[:layout]
-      assert_equal false, Pdf::Configuration.options[:use_xserver]
+      assert_equal 'pdf.html', Wisepdf::Configuration.options[:layout]
+      assert_equal false, Wisepdf::Configuration.options[:use_xserver]
     end
     
     if RbConfig::CONFIG['target_os'] != 'mingw32'
       should 'try to find wkhtmltopdf if not on windows' do
         path = (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
         
-        assert_equal path, Pdf::Configuration.wkhtmltopdf
+        assert_equal path, Wisepdf::Configuration.wkhtmltopdf
       end
     end
   end
   
   context "Configuration" do
     setup do
-      Pdf::Configuration.reset!
+      Wisepdf::Configuration.reset!
     end
     
     should 'accept and override default configuration' do
-      Pdf::Configuration.configure do |config|
+      Wisepdf::Configuration.configure do |config|
         config.wkhtmltopdf = '/path/to/wkhtmltopdf'
         config.options = {
           :layout => "layout.html",
@@ -48,24 +48,24 @@ class WriterTest < Test::Unit::TestCase
           }
         }
       end
-      assert_equal '/path/to/wkhtmltopdf', Pdf::Configuration.wkhtmltopdf
+      assert_equal '/path/to/wkhtmltopdf', Wisepdf::Configuration.wkhtmltopdf
       
-      assert_equal 'layout.html', Pdf::Configuration.options[:layout]
-      assert_equal true, Pdf::Configuration.options[:use_xserver]
-      assert_equal "#{Date.today.year}", Pdf::Configuration.options[:footer][:right]
-      assert_equal 8, Pdf::Configuration.options[:footer][:font_size]
-      assert_equal 8, Pdf::Configuration.options[:footer][:spacing]
-      assert_equal 15, Pdf::Configuration.options[:margin][:bottom]
+      assert_equal 'layout.html', Wisepdf::Configuration.options[:layout]
+      assert_equal true, Wisepdf::Configuration.options[:use_xserver]
+      assert_equal "#{Date.today.year}", Wisepdf::Configuration.options[:footer][:right]
+      assert_equal 8, Wisepdf::Configuration.options[:footer][:font_size]
+      assert_equal 8, Wisepdf::Configuration.options[:footer][:spacing]
+      assert_equal 15, Wisepdf::Configuration.options[:margin][:bottom]
     end
   end  
   
   context "Option parsing" do
     setup do
-      Pdf::Configuration.reset!
+      Wisepdf::Configuration.reset!
     end
     
     should "parse header and footer options" do
-      wp = Pdf::Writer.new
+      wp = Wisepdf::Writer.new
   
       [:header, :footer].each do |hf|
         [:center, :font_name, :left, :right].each do |o|
@@ -86,7 +86,7 @@ class WriterTest < Test::Unit::TestCase
     end
 
     should "parse toc options" do
-      wp = Pdf::Writer.new
+      wp = Wisepdf::Writer.new
       
       [:level_indentation, :header_text].each do |o|
         assert_equal  "toc --toc-#{o.to_s.gsub('_', '-')} \"toc\"",
@@ -105,14 +105,14 @@ class WriterTest < Test::Unit::TestCase
     end
   
     should "parse outline options" do
-      wp = Pdf::Writer.new
+      wp = Wisepdf::Writer.new
   
       assert_equal "--outline", wp.parse_options(:outline => {:outline => true}).strip
       assert_equal "--outline-depth 5", wp.parse_options(:outline => {:outline_depth => 5}).strip
     end
   
     should "parse margins options" do
-      wp = Pdf::Writer.new
+      wp = Wisepdf::Writer.new
   
       [:top, :bottom, :left, :right].each do |o|
         assert_equal "--margin-#{o.to_s} 12", wp.parse_options(:margin => {o => "12"}).strip
@@ -120,7 +120,7 @@ class WriterTest < Test::Unit::TestCase
     end
 
     should "parse other options" do
-      wp = Pdf::Writer.new
+      wp = Wisepdf::Writer.new
   
       [ :orientation, :page_size, :proxy, :username, :password, :cover, :dpi,
         :encoding, :user_style_sheet
@@ -151,7 +151,7 @@ class WriterTest < Test::Unit::TestCase
   
   context "PDF generation" do  
     should "generate PDF from html document" do
-      writer = Pdf::Writer.new
+      writer = Wisepdf::Writer.new
       pdf = writer.to_pdf(HTML_DOCUMENT)
       assert pdf.start_with?("%PDF-1.4")
       assert pdf.rstrip.end_with?("%%EOF")
@@ -159,15 +159,15 @@ class WriterTest < Test::Unit::TestCase
     end
 
     should "raise exception when no path to wkhtmltopdf" do
-      assert_raise Pdf::NoExecutableError do
-        writer = Pdf::Writer.new(" ")
+      assert_raise Wisepdf::NoExecutableError do
+        writer = Wisepdf::Writer.new(" ")
         writer.to_pdf(HTML_DOCUMENT)
       end
     end
 
     should "raise exception when wkhtmltopdf path is wrong" do
-      assert_raise Pdf::NoExecutableError do
-        writer = Pdf::Writer.new("/i/do/not/exist/notwkhtmltopdf")
+      assert_raise Wisepdf::NoExecutableError do
+        writer = Wisepdf::Writer.new("/i/do/not/exist/notwkhtmltopdf")
         writer.to_pdf(HTML_DOCUMENT)
       end
     end
@@ -177,8 +177,8 @@ class WriterTest < Test::Unit::TestCase
         tmp = Tempfile.new('wkhtmltopdf')
         fp = tmp.path
         File.chmod 0000, fp
-        assert_raise Pdf::WriteError do
-          writer = Pdf::Writer.new(fp)
+        assert_raise Wisepdf::WriteError do
+          writer = Wisepdf::Writer.new(fp)
           writer.to_pdf(HTML_DOCUMENT)          
         end
       ensure
@@ -192,8 +192,8 @@ class WriterTest < Test::Unit::TestCase
         tmp = Tempfile.new('wkhtmltopdf')
         fp = tmp.path
         File.chmod 0777, fp
-        assert_raise Pdf::WriteError do
-          writer = Pdf::Writer.new(fp)
+        assert_raise Wisepdf::WriteError do
+          writer = Wisepdf::Writer.new(fp)
           writer.to_pdf(HTML_DOCUMENT)          
         end
       ensure
