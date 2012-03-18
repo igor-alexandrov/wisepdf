@@ -84,7 +84,8 @@ Gem::Specification.new do |s|
     "test/helper.rb",
     "test/helper_assets_test.rb",
     "test/helper_legacy_test.rb",
-    "test/writer_test.rb"
+    "test/writer_test.rb",
+    "wisepdf.gemspec"
   ]
   s.homepage = "http://github.com/igor-alexandrov/wisepdf"
   s.licenses = ["MIT"]
