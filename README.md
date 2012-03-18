@@ -1,12 +1,12 @@
-# PDF
+# wisepdf
 
-## A PDF generation plugin for Ruby on Rails
+Wkhtmltopdf wrapper done right.
 
-PDF uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, then let PDF take care of the hard stuff.
+**Wisepdf** uses the shell utility [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) to serve a PDF file to a user from HTML.  In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, then let PDF take care of the hard stuff.
 
-**PDF** is inspired by [Wicked PDF](https://github.com/mileszs/wicked_pdf) and [PDFKit](https://github.com/jdpace/PDFKit). PDF is optimized to use with Rails 3.1 (3.2), Ruby 1.9.2 and wkhtmltopdf 0.10.0 (and above).
+**Wisepdf** is inspired by [Wicked PDF](https://github.com/mileszs/wicked_pdf) and [PDFKit](https://github.com/jdpace/PDFKit). PDF is optimized to use with Rails 3.1 (3.2), Ruby 1.9.2 and wkhtmltopdf 0.10.0 (and above).
 
-### Installation
+## Installation
 
 First, be sure to install [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/).
 Note that versions before 0.9.0 [have problems](http://code.google.com/p/wkhtmltopdf/issues/detail?id=82&q=vodnik) on some machines with reading/writing to streams.
@@ -16,7 +16,13 @@ More information about [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) coul
 
 Add this to your Gemfile:
 
-    gem 'pdf'
+    gem 'wisepdf'
+
+then do:
+    
+    bundle
+
+## How does it work?
 
 ### Basic Usage
 
@@ -111,9 +117,9 @@ By default, it will render without a layout (:layout => false) and the template 
 If you need to just create a pdf and not display it:
 
     # create a pdf from a string
-    pdf = Pdf::Writer.new.to_pdf('<h1>Hello There!</h1>')
+    pdf = Wisepdf::Writer.new.to_pdf('<h1>Hello There!</h1>')
 		
-    # or from your controller, using views & templates and all wicked_pdf options as normal
+    # or from your controller, using views & templates and all other options as normal
     pdf = render_to_string :pdf => "some_file_name"
 		
     # then save to a file
@@ -128,19 +134,19 @@ If you need to display utf encoded characters, add this to your pdf views or lay
 
 ### Styles
 
-You must define absolute paths to CSS files, images, and javascripts; the best option is to use the *wicked_pdf_stylesheet_link_tag*, *wicked_pdf_image_tag*, and *wicked_pdf_javascript_include_tag* helpers.
+You must define absolute paths to CSS files, images, and javascripts; the best option is to use the *wisepdf_stylesheet_tag*, *wisepdf_image_tag*, and *wisepdf_javascript_tag* helpers.
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
-        <%= wicked_pdf_javascript_include_tag "number_pages" %>
+        <%= wisepdf_stylesheet_tag "pdf" -%>
+        <%= wisepdf_javascript_tag "number_pages" %>
       </head>
       <body onload='number_pages'>
         <div id="header">
-          <%= wicked_pdf_image_tag 'mysite.jpg' %>
+          <%= wisepdf_image_tag 'mysite.jpg' %>
         </div>
         <div id="content">
           <%= yield %>
@@ -180,11 +186,11 @@ If you do not have explicit page breaks (and therefore do not have any "page" cl
 
 ### Configuration
 
-You can put your default configuration, applied to all pdf's at "configure_pdf.rb" initializer.
+You can put your default configuration, applied to all pdf's at "configure_wisepdf.rb" initializer.
 
-    Pdf::Configuration.configuration do |config|
-      config.wkhtmltopdf = '/path/to/wkhtmltopdf'
-      config.options = {
+    Wisepdf::Configuration.configure do |c|
+      c.wkhtmltopdf = '/path/to/wkhtmltopdf'
+      c.options = {
         :layout => "layout.html",
         :use_xserver => true,
         :footer => { 
@@ -202,12 +208,36 @@ You can put your default configuration, applied to all pdf's at "configure_pdf.r
 
 ### Debugging
 
-Now you can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
+You can use a debug param on the URL that shows you the content of the pdf in plain html to design it faster.
 
 First of all you must configure the render parameter `:show_as_html => params[:debug]` and then just use it like normally but adding `debug=1` as a param:
 
     http://localhost:3001/CONTROLLER/X.pdf?debug=1
 
-However, the wicked_pdf_* helpers will use file:// paths for assets when using :show_as_html, and your browser's cross-domain safety feature will kick in, and not render them. To get around this, you can load your assets like so in your templates:
+However, the wisepdf_* helpers will use file:// paths for assets when using :show_as_html, and your browser's cross-domain safety feature will kick in, and not render them. To get around this, you can load your assets like so in your templates:
 
-    <%= params[:debug].present? ? image_tag('foo') : pdf_image_tag('foo') %>
+    <%= params[:debug].present? ? image_tag('foo') : wisepdf_image_tag('foo') %>
+
+## Production?  
+
+**wisepdf** is used at:
+
+* [www.sdelki.ru](http://www.sdelki.ru)
+* [www.lienlog.com](http://www.lienlog.com)
+
+Know other projects? Then contact me and I will add them to the list.
+
+## Contributing to wisepdf
+
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+## Copyright
+
+Copyright (c) 2012 Igor Alexandrov. See LICENSE.txt for
+further details.

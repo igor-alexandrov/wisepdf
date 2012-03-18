@@ -13,11 +13,11 @@ require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
-  gem.name = "pdf"
-  gem.homepage = "http://github.com/igor-alexandrov/pdf"
+  gem.name = "wisepdf"
+  gem.homepage = "http://github.com/igor-alexandrov/wisepdf"
   gem.license = "MIT"
-  gem.summary = "PDF generator for Ruby on Rails"
-  gem.description = %Q{pdf uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML. In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, and let pdf take care of the hard stuff.}
+  gem.summary = "wkhtmltopdf for Rails done right"
+  gem.description = %Q{wisepdf uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML. In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, and let pdf take care of the hard stuff.}
   gem.email = "igor.alexandrov@gmail.com"
   gem.authors = [ "Igor Alexandrov" ]
 end
@@ -37,7 +37,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "yapdf #{version}"
+  rdoc.title = "wisepdf #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
