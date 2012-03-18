@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/igor-alexandrov/wisepdf.png)](http://travis-ci.org/igor-alexandrov/wisepdf)
+
 # wisepdf
 
 Wkhtmltopdf wrapper done right.
