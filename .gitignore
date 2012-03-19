@@ -1,3 +1,5 @@
 coverage
 *.swp
 pkg
+
+test/dummy/log/test.log
