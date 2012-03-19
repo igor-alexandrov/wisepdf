@@ -5,6 +5,3 @@ require 'wisepdf/writer'
 require 'wisepdf/helper'
 require 'wisepdf/render'
 require 'wisepdf/rails' if defined?(Rails)
-
-module Pdf
-end
