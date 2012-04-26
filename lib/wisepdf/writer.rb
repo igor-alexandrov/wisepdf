@@ -12,6 +12,7 @@ module Wisepdf
       log(invoke) if Wisepdf::Configuration.development? || Wisepdf::Configuration.test?
 
       result = IO.popen(invoke, "wb+") do |pdf|
+        pdf.sync = true
         pdf.puts(string)
         pdf.close_write
         pdf.gets(nil)
