@@ -10,15 +10,14 @@ module Wisepdf
     def to_pdf(string, options={})
       command = "\"#{self.wkhtmltopdf}\" #{parse_options(options)} #{'-q ' unless Wisepdf::Configuration.windows?}- - " # -q for no errors on stdout
       print_command(command) if Wisepdf::Configuration.development?
-      
-      
+         
       result = IO.popen(command, "wb+") do |pdf|
         pdf.puts(string)
         pdf.close_write
         pdf.gets(nil)
       end
       
-      raise Wisepdf::WriteError if result && result.rstrip.length == 0
+      raise Wisepdf::WriteError if result.to_s.strip.empty?
       
       return result
     end
