@@ -1,15 +1,5 @@
-# wkhtml2pdf Ruby interface
-# http://code.google.com/p/wkhtmltopdf/
-
-require 'logger'
-require 'digest/md5'
-require 'rbconfig'
-require RbConfig::CONFIG['target_os'] == 'mingw32' && !(RUBY_VERSION =~ /1.9/) ? 'win32/open3' : 'open3'
 require 'active_support/core_ext/class/attribute_accessors'
 require 'active_support/core_ext/object/blank'
-
-# require 'wicked_pdf_railtie'
-require 'tempfile'
 
 module Wisepdf
   class Writer        
@@ -20,17 +10,17 @@ module Wisepdf
     def to_pdf(string, options={})
       command = "\"#{self.wkhtmltopdf}\" #{parse_options(options)} #{'-q ' unless Wisepdf::Configuration.windows?}- - " # -q for no errors on stdout
       print_command(command) if Wisepdf::Configuration.development?
-      pdf, err = Open3.popen3(command) do |stdin, stdout, stderr|
-        stdin.binmode
-        stdout.binmode
-        stderr.binmode
-        stdin.write(string)
-        stdin.close
-        [stdout.read, stderr.read]
-      end
-      raise Wisepdf::WriteError if pdf && pdf.rstrip.length == 0
       
-      return pdf
+      
+      result = IO.popen(command, "wb+") do |pdf|
+        pdf.puts(string)
+        pdf.close_write
+        pdf.gets(nil)
+      end
+      
+      raise Wisepdf::WriteError if result && result.rstrip.length == 0
+      
+      return result
     end
     
     def wkhtmltopdf
