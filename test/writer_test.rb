@@ -3,9 +3,9 @@ require 'helper'
 HTML_DOCUMENT = "<html><body>Hello World</body></html>"
 
 # Provide a public accessor to the normally-private parse_options function
-class Wisepdf::Writer
-  public :parse_options
-end
+# class Wisepdf::Writer
+#   public :parse_options
+# end
 
 class WriterTest < Test::Unit::TestCase    
   context "Default configuration" do
@@ -59,95 +59,95 @@ class WriterTest < Test::Unit::TestCase
     end
   end  
   
-  context "Option parsing" do
-    setup do
-      Wisepdf::Configuration.reset!
-    end
-    
-    should "parse header and footer options" do
-      wp = Wisepdf::Writer.new
-  
-      [:header, :footer].each do |hf|
-        [:center, :font_name, :left, :right].each do |o|
-          assert_equal  "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} \"header_footer\"",
-                        wp.parse_options(hf => {o => "header_footer"}).strip
-        end
-  
-        [:font_size, :spacing].each do |o|
-          assert_equal  "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} 12",
-                        wp.parse_options(hf => {o => "12"}).strip
-        end
-  
-        assert_equal  "--#{hf.to_s}-line",
-                      wp.parse_options(hf => {:line => true}).strip
-        assert_equal  "--#{hf.to_s}-html \"http://www.abc.com\"",
-                      wp.parse_options(hf => {:html => {:url => 'http://www.abc.com'}}).strip
-      end
-    end
-
-    should "parse toc options" do
-      wp = Wisepdf::Writer.new
-      
-      [:level_indentation, :header_text].each do |o|
-        assert_equal  "toc --toc-#{o.to_s.gsub('_', '-')} \"toc\"",
-                      wp.parse_options(:toc => {o => "toc"}).strip
-      end
-  
-      [:text_size_shrink].each do |o|
-        assert_equal  "toc --toc-#{o.to_s.gsub('_', '-')} 5",
-                      wp.parse_options(:toc => {o => 5}).strip
-      end
-  
-      [:disable_toc_links, :disable_dotted_lines].each do |o|
-        assert_equal  "toc --#{o.to_s.gsub('_', '-')}",
-                      wp.parse_options(:toc => {o => true}).strip
-      end
-    end
-  
-    should "parse outline options" do
-      wp = Wisepdf::Writer.new
-  
-      assert_equal "--outline", wp.parse_options(:outline => {:outline => true}).strip
-      assert_equal "--outline-depth 5", wp.parse_options(:outline => {:outline_depth => 5}).strip
-    end
-  
-    should "parse margins options" do
-      wp = Wisepdf::Writer.new
-  
-      [:top, :bottom, :left, :right].each do |o|
-        assert_equal "--margin-#{o.to_s} 12", wp.parse_options(:margin => {o => "12"}).strip
-      end
-    end
-
-    should "parse other options" do
-      wp = Wisepdf::Writer.new
-  
-      [ :orientation, :page_size, :proxy, :username, :password, :cover, :dpi,
-        :encoding, :user_style_sheet
-      ].each do |o|
-        assert_equal "--#{o.to_s.gsub('_', '-')} \"opts\"", wp.parse_options(o => "opts").strip
-      end
-  
-      [:cookie, :post].each do |o|
-        assert_equal "--#{o.to_s.gsub('_', '-')} name value", wp.parse_options(o => "name value").strip
-  
-        nv_formatter = ->(number){ "--#{o.to_s.gsub('_', '-')} par#{number} val#{number}" }
-        assert_equal "#{nv_formatter.call(1)} #{nv_formatter.call(2)}", wp.parse_options(o => ['par1 val1', 'par2 val2']).strip
-      end
-  
-      [:redirect_delay, :zoom, :page_offset].each do |o|
-        assert_equal "--#{o.to_s.gsub('_', '-')} 5", wp.parse_options(o => 5).strip
-      end
-  
-      [ :book, :default_header, :disable_javascript, :greyscale, :lowquality,
-        :enable_plugins, :disable_internal_links, :disable_external_links,
-        :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background
-      ].each do |o|
-        assert_equal "--#{o.to_s.gsub('_', '-')}", wp.parse_options(o => true).strip
-      end
-    end
-    
-  end
+  # context "Option parsing" do
+  #   setup do
+  #     Wisepdf::Configuration.reset!
+  #   end
+  #   
+  #   should "parse header and footer options" do
+  #     wp = Wisepdf::Writer.new
+  # 
+  #     [:header, :footer].each do |hf|
+  #       [:center, :font_name, :left, :right].each do |o|
+  #         assert_equal  "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} \"header_footer\"",
+  #                       wp.parse_options(hf => {o => "header_footer"}).strip
+  #       end
+  # 
+  #       [:font_size, :spacing].each do |o|
+  #         assert_equal  "--#{hf.to_s}-#{o.to_s.gsub('_', '-')} 12",
+  #                       wp.parse_options(hf => {o => "12"}).strip
+  #       end
+  # 
+  #       assert_equal  "--#{hf.to_s}-line",
+  #                     wp.parse_options(hf => {:line => true}).strip
+  #       assert_equal  "--#{hf.to_s}-html \"http://www.abc.com\"",
+  #                     wp.parse_options(hf => {:html => {:url => 'http://www.abc.com'}}).strip
+  #     end
+  #   end
+  # 
+  #   should "parse toc options" do
+  #     wp = Wisepdf::Writer.new
+  #     
+  #     [:level_indentation, :header_text].each do |o|
+  #       assert_equal  "toc --toc-#{o.to_s.gsub('_', '-')} \"toc\"",
+  #                     wp.parse_options(:toc => {o => "toc"}).strip
+  #     end
+  # 
+  #     [:text_size_shrink].each do |o|
+  #       assert_equal  "toc --toc-#{o.to_s.gsub('_', '-')} 5",
+  #                     wp.parse_options(:toc => {o => 5}).strip
+  #     end
+  # 
+  #     [:disable_toc_links, :disable_dotted_lines].each do |o|
+  #       assert_equal  "toc --#{o.to_s.gsub('_', '-')}",
+  #                     wp.parse_options(:toc => {o => true}).strip
+  #     end
+  #   end
+  # 
+  #   should "parse outline options" do
+  #     wp = Wisepdf::Writer.new
+  # 
+  #     assert_equal "--outline", wp.parse_options(:outline => {:outline => true}).strip
+  #     assert_equal "--outline-depth 5", wp.parse_options(:outline => {:outline_depth => 5}).strip
+  #   end
+  # 
+  #   should "parse margins options" do
+  #     wp = Wisepdf::Writer.new
+  # 
+  #     [:top, :bottom, :left, :right].each do |o|
+  #       assert_equal "--margin-#{o.to_s} 12", wp.parse_options(:margin => {o => "12"}).strip
+  #     end
+  #   end
+  # 
+  #   should "parse other options" do
+  #     wp = Wisepdf::Writer.new
+  # 
+  #     [ :orientation, :page_size, :proxy, :username, :password, :cover, :dpi,
+  #       :encoding, :user_style_sheet
+  #     ].each do |o|
+  #       assert_equal "--#{o.to_s.gsub('_', '-')} \"opts\"", wp.parse_options(o => "opts").strip
+  #     end
+  # 
+  #     [:cookie, :post].each do |o|
+  #       assert_equal "--#{o.to_s.gsub('_', '-')} name value", wp.parse_options(o => "name value").strip
+  # 
+  #       nv_formatter = ->(number){ "--#{o.to_s.gsub('_', '-')} par#{number} val#{number}" }
+  #       assert_equal "#{nv_formatter.call(1)} #{nv_formatter.call(2)}", wp.parse_options(o => ['par1 val1', 'par2 val2']).strip
+  #     end
+  # 
+  #     [:redirect_delay, :zoom, :page_offset].each do |o|
+  #       assert_equal "--#{o.to_s.gsub('_', '-')} 5", wp.parse_options(o => 5).strip
+  #     end
+  # 
+  #     [ :book, :default_header, :disable_javascript, :greyscale, :lowquality,
+  #       :enable_plugins, :disable_internal_links, :disable_external_links,
+  #       :print_media_type, :disable_smart_shrinking, :use_xserver, :no_background
+  #     ].each do |o|
+  #       assert_equal "--#{o.to_s.gsub('_', '-')}", wp.parse_options(o => true).strip
+  #     end
+  #   end
+  #   
+  # end
   
   context "PDF generation" do  
     should "generate PDF from html document" do

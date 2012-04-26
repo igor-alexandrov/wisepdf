@@ -32,7 +32,12 @@ module Wisepdf
         (defined?(::Rails) && ::Rails.env == 'development') ||
           (defined?(RAILS_ENV) && RAILS_ENV == 'development')
       end
-
+      
+      def test?
+        (defined?(::Rails) && ::Rails.env == 'test') ||
+          (defined?(RAILS_ENV) && RAILS_ENV == 'test')
+      end      
+      
       def windows?
         RbConfig::CONFIG['target_os'] == 'mingw32'
       end
