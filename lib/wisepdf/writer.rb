@@ -1,3 +1,5 @@
+require 'open3'
+
 module Wisepdf
   class Writer        
     def initialize(path=nil)
@@ -11,12 +13,31 @@ module Wisepdf
       invoke = self.command.join(' ')   
       log(invoke) if Wisepdf::Configuration.development? || Wisepdf::Configuration.test?
 
-      result = IO.popen(invoke, "wb+") do |pdf|
-        pdf.sync = true
-        pdf.puts(string)
-        pdf.close_write
-        pdf.gets(nil)
+      # result = IO.popen(invoke, "wb+") do |f|
+      #   # f.sync = true
+      #   f.puts(string)
+      #   f.close_write
+      #   f.gets(nil)
+      #   
+      #   # pdf = f.gets(nil)
+      #   # f.close
+      #   # pdf        
+      # end
+      result, err = Open3.popen3(invoke) do |stdin, stdout, stderr|
+        stdin.write(string)
+        stdin.close
+        [stdout.read, stderr.read]
       end
+      # result, err = Open3.popen3(invoke) do |stdin, stdout, stderr|
+      #   stdin.binmode
+      #   stdout.binmode
+      #   stderr.binmode
+      #   stdin.write(string)
+      #   stdin.close_write
+      #   
+      #   [stdout.read, stderr.read]
+      # end
+      
 
       raise Wisepdf::WriteError if result.to_s.strip.empty?
 
