@@ -54,7 +54,7 @@ module Wisepdf
         render :template => options[:template], :layout => options[:layout], :content_type => "text/html"
       else
         pdf_content = make_pdf(options)
-        File.open(options[:save_to_file], 'wb') {|file| file << pdf_content } if options.delete(:save_to_file)
+        File.open(options.delete(:save_to_file), 'wb') {|file| file << pdf_content } if options[:save_to_file].present?
       
         pdf_name += '.pdf' unless pdf_name =~ /.pdf\z|.PDF\Z/
         send_data(pdf_content, :filename => pdf_name, :type => 'application/pdf', :disposition => options[:disposition]) unless options[:save_only]
