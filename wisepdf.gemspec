@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "wisepdf"
-  s.version = "1.1.3"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Igor Alexandrov"]
-  s.date = "2012-04-27"
+  s.date = "2012-05-02"
   s.description = "wisepdf uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML. In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, and let pdf take care of the hard stuff."
   s.email = "igor.alexandrov@gmail.com"
   s.extra_rdoc_files = [
@@ -30,15 +30,16 @@ Gem::Specification.new do |s|
     "lib/wisepdf/configuration.rb",
     "lib/wisepdf/errors.rb",
     "lib/wisepdf/helper.rb",
+    "lib/wisepdf/parser.rb",
     "lib/wisepdf/rails.rb",
     "lib/wisepdf/rails/engine.rb",
     "lib/wisepdf/rails/legacy.rb",
     "lib/wisepdf/rails/railtie.rb",
     "lib/wisepdf/render.rb",
-    "lib/wisepdf/tempfile.rb",
     "lib/wisepdf/writer.rb",
     "pdf.gemspec",
     "test/application_controller_test.rb",
+    "test/configuration_test.rb",
     "test/dummy/README.rdoc",
     "test/dummy/Rakefile",
     "test/dummy/app/assets/javascripts/application.js",
@@ -49,7 +50,9 @@ Gem::Specification.new do |s|
     "test/dummy/app/helpers/application_helper.rb",
     "test/dummy/app/mailers/.gitkeep",
     "test/dummy/app/models/.gitkeep",
+    "test/dummy/app/views/application/index.pdf.erb",
     "test/dummy/app/views/layouts/application.html.erb",
+    "test/dummy/app/views/layouts/pdf.html.erb",
     "test/dummy/config.ru",
     "test/dummy/config/application.rb",
     "test/dummy/config/boot.rb",
@@ -84,6 +87,7 @@ Gem::Specification.new do |s|
     "test/helper.rb",
     "test/helper_assets_test.rb",
     "test/helper_legacy_test.rb",
+    "test/parser_test.rb",
     "test/writer_test.rb",
     "wisepdf.gemspec"
   ]
