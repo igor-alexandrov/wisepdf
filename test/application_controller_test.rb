@@ -23,5 +23,10 @@ class ApplicationControllerTest < ActionController::TestCase
     should "respond to #prerender_header_and_footer" do
       assert_respond_to @controller, :prerender_header_and_footer
     end        
+    
+    should 'render pdf' do
+      get :index, :format => :pdf
+      assert_response 200
+    end
   end
 end

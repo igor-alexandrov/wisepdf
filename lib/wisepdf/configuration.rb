@@ -3,17 +3,18 @@ require 'singleton'
 module Wisepdf
   class Configuration
     include Singleton
-    cattr_accessor :options
-    cattr_accessor :wkhtmltopdf
     
     class << self
+      attr_accessor :options
+      attr_accessor :wkhtmltopdf
+      
       def wkhtmltopdf
-        return @@wkhtmltopdf if @@wkhtmltopdf.present?
+        return @wkhtmltopdf if @wkhtmltopdf.present?
                 
-        if @@wkhtmltopdf.nil? && !self.windows?
-          @@wkhtmltopdf = (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
+        if @wkhtmltopdf.nil? && !self.windows?
+          @wkhtmltopdf = (defined?(Bundler) ? `bundle exec which wkhtmltopdf` : `which wkhtmltopdf`).chomp
         end
-        return @@wkhtmltopdf 
+        return @wkhtmltopdf 
       end
     
       def configure
@@ -21,11 +22,11 @@ module Wisepdf
       end
     
       def reset!
-        @@options = {
-          :layout => "pdf.html",
+        @options = {
+          :encoding => "UTF-8",
           :use_xserver => false
         }
-        @@wkhtmltopdf = nil
+        @wkhtmltopdf = nil
       end    
     
       def development?

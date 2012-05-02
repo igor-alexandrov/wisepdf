@@ -1,43 +1,21 @@
 require 'open3'
 
 module Wisepdf
-  class Writer        
-    def initialize(path=nil)
-      self.wkhtmltopdf = path unless path.nil?
+  class Writer  
+    def initialize(wkhtmltopdf = nil, options = {})
+      self.wkhtmltopdf = wkhtmltopdf unless wkhtmltopdf.nil?
+      self.options = options
     end
 
     def to_pdf(string, options={})
-      options = { :encoding => "UTF-8" }.merge(options)
-      @options = normalize_options(options)
+      invoke = self.command(options).join(' ')   
+      self.log(invoke) if Wisepdf::Configuration.development? || Wisepdf::Configuration.test?
 
-      invoke = self.command.join(' ')   
-      log(invoke) if Wisepdf::Configuration.development? || Wisepdf::Configuration.test?
-
-      # result = IO.popen(invoke, "wb+") do |f|
-      #   # f.sync = true
-      #   f.puts(string)
-      #   f.close_write
-      #   f.gets(nil)
-      #   
-      #   # pdf = f.gets(nil)
-      #   # f.close
-      #   # pdf        
-      # end
       result, err = Open3.popen3(invoke) do |stdin, stdout, stderr|
         stdin.write(string)
         stdin.close
         [stdout.read, stderr.read]
       end
-      # result, err = Open3.popen3(invoke) do |stdin, stdout, stderr|
-      #   stdin.binmode
-      #   stdout.binmode
-      #   stderr.binmode
-      #   stdin.write(string)
-      #   stdin.close_write
-      #   
-      #   [stdout.read, stderr.read]
-      # end
-      
 
       raise Wisepdf::WriteError if result.to_s.strip.empty?
 
@@ -45,69 +23,36 @@ module Wisepdf
     end
 
     def wkhtmltopdf
-      return @wkhtmltopdf if @wkhtmltopdf.present?
-
-      @wkhtmltopdf = Wisepdf::Configuration.wkhtmltopdf
-      raise Wisepdf::NoExecutableError.new(@wkhtmltopdf) if @wkhtmltopdf.nil? || !File.exists?(@wkhtmltopdf)
-
-      return @wkhtmltopdf
+      @wkhtmltopdf ||= Wisepdf::Configuration.wkhtmltopdf
+      @wkhtmltopdf
     end
 
-    def wkhtmltopdf=(value)
+    def wkhtmltopdf=(value)      
       @wkhtmltopdf = value
-      raise Wisepdf::NoExecutableError.new(@wkhtmltopdf) if @wkhtmltopdf.nil? || !File.exists?(@wkhtmltopdf)      
+      raise Wisepdf::NoExecutableError.new(@wkhtmltopdf) if @wkhtmltopdf.blank? || !File.exists?(@wkhtmltopdf)            
     end
-
-    protected
-    def command
+    
+    def options
+      @options ||= Wisepdf::Parser.parse(Wisepdf::Configuration.options.dup)
+      @options
+    end
+    
+    def options=(value)
+      self.options.merge!(Wisepdf::Parser.parse(value))
+    end
+    
+  protected
+    def command(options = {})
+      options = Wisepdf::Parser.parse(options)
+      
       args = [self.wkhtmltopdf]
-      args += @options.to_a.flatten.compact
+      args += self.options.merge(options).to_a.flatten.compact
       args << '--quiet'
 
       args << '-'        
       args << '-'
 
       args.map {|arg| %Q{"#{arg.gsub('"', '\"')}"}}
-    end
-
-    def normalize_options(options)
-      options = self.flatten(options)
-      normalized_options = {}
-
-      options.each do |key, value|
-        next if !value
-        normalized_key = "--#{self.normalize_arg(key)}"
-        normalized_options[normalized_key] = self.normalize_value(value)
-      end
-      normalized_options
-    end
-
-    def flatten(options, prefix = nil)
-      hash = {}
-      options.each do |k,v|
-        key = prefix.nil? ? k : "#{prefix.to_s}-#{k}"
-
-        if v.is_a?(Hash)
-          hash.delete(k)              
-          hash.merge!(self.flatten(v, key))
-        else              
-          hash[key.to_s] = v  
-        end            
-      end
-      return hash
-    end
-
-    def normalize_arg(arg)
-      arg.to_s.downcase.gsub(/[^a-z0-9]/,'-')
-    end
-
-    def normalize_value(value)
-      case value
-      when TrueClass
-        nil
-      else
-        value.to_s
-      end
     end
 
     def log(command)

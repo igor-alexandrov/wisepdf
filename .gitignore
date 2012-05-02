@@ -3,3 +3,4 @@ coverage
 pkg
 
 test/dummy/log/test.log
+test/dummy/log/development.log
