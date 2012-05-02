@@ -1,3 +1,5 @@
+require 'helper'
+
 class ConfigurationTest < Test::Unit::TestCase    
   context "Default configuration" do
     setup do

@@ -1,3 +1,5 @@
+require 'helper'
+
 class ParserTest < Test::Unit::TestCase    
   context "Options normalization" do
     setup do
