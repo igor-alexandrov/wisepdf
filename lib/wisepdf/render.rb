@@ -44,7 +44,7 @@ module Wisepdf
       Wisepdf::Configuration.options.merge({
         :wkhtmltopdf => nil,
         :layout => false,
-        :template => File.join(controller_path, action_name),
+        :template => "#{controller_path}/#{action_name}",
         :disposition => "inline"              
       })
     end
