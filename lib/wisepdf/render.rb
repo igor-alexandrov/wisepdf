@@ -41,12 +41,12 @@ module Wisepdf
     end
     
     def default_pdf_render_options
-      Wisepdf::Configuration.options.merge({
+      {
         :wkhtmltopdf => nil,
         :layout => false,
         :template => "#{controller_path}/#{action_name}",
-        :disposition => "inline"              
-      })
+        :disposition => "inline"                      
+      }.merge(Wisepdf::Configuration.options)
     end
     
     def make_pdf(options = {})
