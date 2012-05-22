@@ -12,6 +12,7 @@ module Wisepdf
       self.log(invoke) if Wisepdf::Configuration.development? || Wisepdf::Configuration.test?
 
       result, err = Open3.popen3(invoke) do |stdin, stdout, stderr|
+        stdin.binmode
         stdin.write(string)
         stdin.close
         [stdout.read, stderr.read]
