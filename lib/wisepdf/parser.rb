@@ -6,7 +6,7 @@ module Wisepdf
       :pdf, :layout, :template, :action, :partial,
       :object, :collection, :as, :spacer_template,
       :disposition, :locals, :status, :file, :text,
-      :xml, :json, :callback, :inline, :location
+      :xml, :json, :callback, :inline, :location, :save_to_file
     ]
        
     class << self
