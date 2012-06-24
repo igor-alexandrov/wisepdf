@@ -71,7 +71,7 @@ module Wisepdf
           opts = arguments[hf].delete(:html)
           
           @hf_tempfiles = [] if ! defined?(@hf_tempfiles)
-          @hf_tempfiles.push( tf = Tempfile.new(["wisepdf_#{hf}_pdf", '.html'], 'tmp') )
+          @hf_tempfiles.push( tf = Tempfile.new(["wisepdf_#{hf}_pdf", '.html']) )
           opts[:layout] ||= arguments[:layout]
           
           tf.write render_to_string(:template => opts[:template], :layout => opts[:layout], :locals => opts[:locals])
