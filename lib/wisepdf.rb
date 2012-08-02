@@ -1,5 +1,6 @@
 WISEPDF_PATH = File.dirname(__FILE__) + "/wisepdf/"
 
+require WISEPDF_PATH + 'ext'
 require WISEPDF_PATH + 'errors'
 require WISEPDF_PATH + 'configuration'
 require WISEPDF_PATH + 'parser'
