@@ -41,7 +41,11 @@ module Wisepdf
       end
 
       def wisepdf_image_tag(img, options={})
-        image_tag "file:///#{::Rails.application.assets.find_asset(img).pathname.to_s}", options
+        if File.exists? img
+          image_tag "file://#{img}", options
+        elsif asset = ::Rails.application.assets.find_asset(img)
+          image_tag "file:///#{asset.pathname.to_s}", options
+        end
       end
       
       def wisepdf_javascript_tag(*sources)
