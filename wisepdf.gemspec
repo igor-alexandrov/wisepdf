@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "wisepdf"
-  s.version = "1.2.5"
+  s.version = "1.2.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Igor Alexandrov"]
-  s.date = "2012-08-02"
+  s.date = "2012-11-28"
   s.description = "wisepdf uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML. In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, and let pdf take care of the hard stuff."
   s.email = "igor.alexandrov@gmail.com"
   s.extra_rdoc_files = [
@@ -79,12 +79,6 @@ Gem::Specification.new do |s|
     "test/dummy/public/javascripts/wisepdf.js",
     "test/dummy/public/stylesheets/wisepdf.css",
     "test/dummy/script/rails",
-    "test/dummy/tmp/cache/assets/CA9/590/sprockets%2F260d19b0714b39b217abfe83309458b7",
-    "test/dummy/tmp/cache/assets/D13/4A0/sprockets%2Fc857f4fea90e731182fa7000ea6833e9",
-    "test/dummy/tmp/cache/assets/D1C/0F0/sprockets%2F13dc05c787589dd73a669e0ad23d54e8",
-    "test/dummy/tmp/cache/assets/D6E/B20/sprockets%2F2669d77f5dd55e82ba092accac21871a",
-    "test/dummy/tmp/cache/assets/D93/BA0/sprockets%2Fe162e2a148480db4edf41c7ca8a527cb",
-    "test/dummy/tmp/cache/assets/E1B/1A0/sprockets%2Fbdc3a3ccd7d2f02dddd41712ed4c8e31",
     "test/helper.rb",
     "test/helper_assets_test.rb",
     "test/helper_legacy_test.rb",
@@ -107,12 +101,14 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
+      s.add_development_dependency(%q<rails>, [">= 3.0.0"])
     else
       s.add_dependency(%q<sqlite3>, [">= 0"])
       s.add_dependency(%q<wkhtmltopdf-binary>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
+      s.add_dependency(%q<rails>, [">= 3.0.0"])
     end
   else
     s.add_dependency(%q<sqlite3>, [">= 0"])
@@ -120,6 +116,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
+    s.add_dependency(%q<rails>, [">= 3.0.0"])
   end
 end
 
