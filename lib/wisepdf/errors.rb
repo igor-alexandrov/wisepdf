@@ -7,7 +7,7 @@ module Wisepdf
       super(msg)
     end
   end
-  
+
   class WriteError < StandardError
   end
 end

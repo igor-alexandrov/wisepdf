@@ -3,9 +3,9 @@ module Wisepdf
     module Legacy
       def wisepdf_stylesheet_tag(*sources)
         stylesheets_dir = ::Rails.root.join('public','stylesheets')
-                
+
         sources.collect { |source|
-          filename = ( source =~ /.css\z/ ? source : source + '.css' )  
+          filename = ( source =~ /.css\z/ ? source : source + '.css' )
           "<style type='text/css'>
             #{File.read(stylesheets_dir.join(filename))}
           </style>"
@@ -15,10 +15,10 @@ module Wisepdf
       def wisepdf_image_tag(img, options={})
         image_tag "file:///#{::Rails.root.join('public', 'images', img).pathname.to_s}", options
       end
-      
+
       def wisepdf_javascript_tag(*sources)
         javascripts_dir = ::Rails.root.join('public','javascripts')
-        
+
         sources.collect { |source|
           filename = ( source =~ /.js\z/ ? source : source + '.js' )
           "<script type='text/javascript'>
@@ -28,12 +28,12 @@ module Wisepdf
           </script>"
         }.join("\n").html_safe
       end
-    end  
-    
+    end
+
     module Assets
-      def wisepdf_stylesheet_tag(*sources)        
+      def wisepdf_stylesheet_tag(*sources)
         sources.collect { |source|
-          filename = ( source =~ /.css\z/ ? source : source + '.css' )  
+          filename = ( source =~ /.css\z/ ? source : source + '.css' )
           "<style type='text/css'>
             #{::Rails.application.assets.find_asset(filename)}
           </style>"
@@ -47,7 +47,7 @@ module Wisepdf
           image_tag "file:///#{asset.pathname.to_s}", options
         end
       end
-      
+
       def wisepdf_javascript_tag(*sources)
         sources.collect { |source|
           filename = ( source =~ /.js\z/ ? source : source + '.js' )

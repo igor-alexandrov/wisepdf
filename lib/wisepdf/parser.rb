@@ -1,14 +1,14 @@
 module Wisepdf
   class Parser
     include Singleton
-    
+
     ESCAPED_OPTIONS = [
       :pdf, :layout, :template, :action, :partial,
       :object, :collection, :as, :spacer_template,
       :disposition, :locals, :status, :file, :text,
       :xml, :json, :callback, :inline, :location, :save_to_file
     ]
-       
+
     class << self
       def parse(options)
         options = self.escape(options)
@@ -23,27 +23,27 @@ module Wisepdf
         end
         parsed_options
       end
-            
-    protected  
+
+      protected
       def escape(options)
-        options.delete_if{ |k,v| ESCAPED_OPTIONS.include?(k.to_sym) }    
+        options.delete_if{ |k,v| ESCAPED_OPTIONS.include?(k.to_sym) }
       end
-    
+
       def flatten(options, prefix = nil)
         hash = {}
         options.each do |k,v|
           key = prefix.nil? ? k : "#{prefix.to_s}-#{k}"
 
           if v.is_a?(Hash)
-            hash.delete(k)              
+            hash.delete(k)
             hash.merge!(self.flatten(v, key))
-          else              
-            hash[key.to_s] = v  
-          end            
+          else
+            hash[key.to_s] = v
+          end
         end
         return hash
-      end    
-      
+      end
+
       def normalize_arg(arg)
         arg.to_s.downcase.gsub(/[^a-z0-9]/,'-')
       end
@@ -56,6 +56,6 @@ module Wisepdf
           value.to_s
         end
       end
-    end  
+    end
   end
 end

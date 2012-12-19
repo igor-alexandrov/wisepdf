@@ -7,9 +7,9 @@ module Wisepdf
         require 'wisepdf/rails/railtie'
       else
         require 'wisepdf/rails/engine'
-      end  
-    end  
-    
+      end
+    end
+
     if Mime::Type.lookup_by_extension(:pdf).nil?
       Mime::Type.register('application/pdf', :pdf)
     end
