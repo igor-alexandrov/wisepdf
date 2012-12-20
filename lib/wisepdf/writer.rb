@@ -24,13 +24,12 @@ module Wisepdf
     end
 
     def wkhtmltopdf
-      @wkhtmltopdf ||= Wisepdf::Configuration.wkhtmltopdf
-      @wkhtmltopdf
+      @wkhtmltopdf || self.wkhtmltopdf = Wisepdf::Configuration.wkhtmltopdf
     end
 
     def wkhtmltopdf=(value)
+      raise Wisepdf::NoExecutableError.new(value) if value.blank? || !File.exists?(value)
       @wkhtmltopdf = value
-      raise Wisepdf::NoExecutableError.new(@wkhtmltopdf) if @wkhtmltopdf.blank? || !File.exists?(@wkhtmltopdf)
     end
 
     def options
