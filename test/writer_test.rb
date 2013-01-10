@@ -6,8 +6,8 @@ class Wisepdf::Writer
   public :command
 end
 
-class WriterTest < Test::Unit::TestCase    
-  context "PDF generation" do  
+class WriterTest < Test::Unit::TestCase
+  context "PDF generation" do
     should "generate PDF from html document" do
       writer = Wisepdf::Writer.new
       pdf = writer.to_pdf(HTML_DOCUMENT)
@@ -29,7 +29,7 @@ class WriterTest < Test::Unit::TestCase
         writer.to_pdf(HTML_DOCUMENT)
       end
     end
-  
+
     should "raise exception when wkhtmltopdf is not executable" do
       begin
         tmp = Tempfile.new('wkhtmltopdf')
@@ -37,14 +37,14 @@ class WriterTest < Test::Unit::TestCase
         File.chmod 0000, fp
         assert_raise Wisepdf::WriteError do
           writer = Wisepdf::Writer.new(fp)
-          writer.to_pdf(HTML_DOCUMENT)          
+          writer.to_pdf(HTML_DOCUMENT)
         end
       ensure
         tmp.delete
       end
     end
 
-  
+
     should "raise exception when pdf generation fails" do
       begin
         tmp = Tempfile.new('wkhtmltopdf')
@@ -52,11 +52,11 @@ class WriterTest < Test::Unit::TestCase
         File.chmod 0777, fp
         assert_raise Wisepdf::WriteError do
           writer = Wisepdf::Writer.new(fp)
-          writer.to_pdf(HTML_DOCUMENT)          
+          writer.to_pdf(HTML_DOCUMENT)
         end
       ensure
         tmp.delete
       end
-    end  
-  end    
+    end
+  end
 end
