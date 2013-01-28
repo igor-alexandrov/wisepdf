@@ -243,7 +243,7 @@ Know other projects? Then contact me and I will add them to the list.
 
 ## Credits
 
-![JetRockets](http://www.jetrockets.ru/images/logo.png)
+![JetRockets](http://www.jetrockets.ru/public/logo.png)
 
 Wisepsd is maintained by [JetRockets](http://www.jetrockets.ru/en).
 
