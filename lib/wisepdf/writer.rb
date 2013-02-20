@@ -9,13 +9,12 @@ module Wisepdf
 
     def to_pdf(string, options={})
       invoke = self.command(options).join(' ')
-      self.log(invoke) if Wisepdf::Configuration.development? || Wisepdf::Configuration.test?
+      self.log(invoke) unless Wisepdf::Configuration.production?
 
-      result, err = Open3.popen3(invoke) do |stdin, stdout, stderr|
-        stdin.binmode
-        stdin.write(string)
-        stdin.close
-        [stdout.read, stderr.read]
+      result = IO.popen(invoke, "wb+") do |pdf|
+        pdf.puts(string)
+        pdf.close_write
+        pdf.gets(nil)
       end
 
       raise Wisepdf::WriteError if result.to_s.strip.empty?
