@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "wisepdf"
-  s.version = "1.2.7"
+  s.version = "1.2.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Igor Alexandrov"]
-  s.date = "2013-01-10"
+  s.date = "2013-02-20"
   s.description = "wisepdf uses the shell utility wkhtmltopdf to serve a PDF file to a user from HTML. In other words, rather than dealing with a PDF generation DSL of some sort, you simply write an HTML view as you would normally, and let pdf take care of the hard stuff."
   s.email = "igor.alexandrov@gmail.com"
   s.extra_rdoc_files = [
