@@ -1,4 +1,4 @@
-require 'open3'
+require 'shellwords'
 
 module Wisepdf
   class Writer
@@ -51,7 +51,7 @@ module Wisepdf
       args << '-'
       args << '-'
 
-      args.map {|arg| %Q{"#{arg.gsub('"', '\"')}"}}
+      args.map {|arg| %Q{"#{arg.shellescape}"}}
     end
 
     def log(command)
