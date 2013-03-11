@@ -36,10 +36,11 @@ GEM
     git (1.2.5)
     hike (1.2.1)
     i18n (0.6.4)
-    jeweler (1.6.4)
+    jeweler (1.8.4)
       bundler (~> 1.0)
       git (>= 1.2.5)
       rake
+      rdoc
     journey (1.0.4)
     json (1.7.7)
     mail (2.4.4)
@@ -103,7 +104,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (>= 1.0.0)
-  jeweler (~> 1.6.4)
+  jeweler
   rails (>= 3.0.0)
   shoulda
   sqlite3
