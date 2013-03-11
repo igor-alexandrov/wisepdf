@@ -1,5 +1,3 @@
-require 'shellwords'
-
 module Wisepdf
   class Writer
     def initialize(wkhtmltopdf = nil, options = {})
@@ -40,7 +38,8 @@ module Wisepdf
       self.options.merge!(Wisepdf::Parser.parse(value))
     end
 
-    protected
+  protected
+
     def command(options = {})
       options = Wisepdf::Parser.parse(options)
 
@@ -51,7 +50,7 @@ module Wisepdf
       args << '-'
       args << '-'
 
-      args.map {|arg| %Q{"#{arg.shellescape}"}}
+      args.map {|arg| %Q{"#{arg.gsub('"', '\"')}"}}
     end
 
     def log(command)

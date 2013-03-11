@@ -1,4 +1,8 @@
-[![Build Status](https://secure.travis-ci.org/igor-alexandrov/wisepdf.png)](http://travis-ci.org/igor-alexandrov/wisepdf)
+[![Gem Version](https://badge.fury.io/rb/wisepdf.png)](http://badge.fury.io/rb/wiselinks)
+[![Build Status](https://travis-ci.org/igor-alexandrov/wisepdf.png?branch=master)](https://travis-ci.org/igor-alexandrov/wiselinks)
+[![Dependency Status](https://gemnasium.com/igor-alexandrov/wisepdf.png)](https://gemnasium.com/igor-alexandrov/wiselinks)
+
+
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/igor-alexandrov/wisepdf)
 
 # wisepdf
@@ -208,6 +212,19 @@ You can put your default configuration, applied to all pdf's at "configure_wisep
       
     end
       
+### Problems with with wkhtmltopdf-0.10 and above?
+
+If you experience problems with wkhtmltopdf-0.10 and above like getting `Broken Pipe` error or something similar, then you probably should compile wkhtmltopdf from source.
+
+To do this you will have to:
+
+* download the latest sources from wkhtmltopdf repository [https://github.com/antialize/wkhtmltopdf](https://github.com/antialize/wkhtmltopdf).
+* install needed dependencies (libXrender-devel, libXext-devel, libXft-devel, openssl-devel, development tools)
+* install QT
+* run `qmake` in your wkhtmltopdf sources folder
+* run `make && make install`
+
+After this all should as expected.
 
 ### Debugging
 
