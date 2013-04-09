@@ -24,6 +24,10 @@ More information about [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) coul
 Add this to your Gemfile:
 
     gem 'wisepdf'
+    
+if you don't already have wkhtmltopdf installed on your machine you can get up and running quickly by adding this to your Gemfile:
+
+    gem 'wkhtmltopdf-binary'
 
 then do:
     
