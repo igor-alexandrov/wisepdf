@@ -97,6 +97,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.36)
+    wkhtmltopdf-binary (0.9.9.1)
 
 PLATFORMS
   ruby
@@ -107,3 +108,4 @@ DEPENDENCIES
   rails (>= 3.0.0)
   shoulda
   sqlite3
+  wkhtmltopdf-binary
