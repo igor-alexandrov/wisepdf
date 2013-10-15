@@ -5,6 +5,9 @@ ENV['RAILS_ENV'] = 'test'
 require "dummy/config/environment"
 require "rails/test_help"
 
+require 'coveralls'
+Coveralls.wear!
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
