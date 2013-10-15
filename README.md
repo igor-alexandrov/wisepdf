@@ -1,9 +1,8 @@
-[![Gem Version](https://badge.fury.io/rb/wisepdf.png)](http://badge.fury.io/rb/wiselinks)
-[![Build Status](https://travis-ci.org/igor-alexandrov/wisepdf.png?branch=master)](https://travis-ci.org/igor-alexandrov/wiselinks)
-[![Dependency Status](https://gemnasium.com/igor-alexandrov/wisepdf.png)](https://gemnasium.com/igor-alexandrov/wiselinks)
-
-
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/igor-alexandrov/wisepdf)
+[![Build Status](https://travis-ci.org/igor-alexandrov/wisepdf.png)](https://travis-ci.org/igor-alexandrov/wisepdf)
+[![Code Climate](https://codeclimate.com/github/igor-alexandrov/wisepdf.png)](https://codeclimate.com/github/igor-alexandrov/wisepdf)
+[![Coverage Status](https://coveralls.io/repos/igor-alexandrov/wisepdf/badge.png)](https://coveralls.io/r/igor-alexandrov/wisepdf)
+[![Dependency Status](https://gemnasium.com/igor-alexandrov/wisepdf.png)](https://gemnasium.com/igor-alexandrov/wisepdf)
+[![Gem Version](https://badge.fury.io/rb/wisepdf.png)](http://badge.fury.io/rb/wisepdf)
 
 # wisepdf
 
