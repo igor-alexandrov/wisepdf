@@ -25,8 +25,12 @@ Add this to your Gemfile:
 
     gem 'wisepdf'
 
+if you don't already have wkhtmltopdf installed on your machine you can get up and running quickly by adding this to your Gemfile:
+
+    gem 'wkhtmltopdf-binary'
+
 then do:
-    
+
     bundle install
 
 ## How does it work?
@@ -125,10 +129,10 @@ If you need to just create a pdf and not display it:
 
     # create a pdf from a string
     pdf = Wisepdf::Writer.new.to_pdf('<h1>Hello There!</h1>')
-		
+
     # or from your controller, using views & templates and all other options as normal
     pdf = render_to_string :pdf => "some_file_name"
-		
+
     # then save to a file
     save_path = Rails.root.join('pdfs','filename.pdf')
     File.open(save_path, 'wb') do |file|
@@ -200,7 +204,7 @@ You can put your default configuration, applied to all pdf's at "configure_wisep
       c.options = {
         :layout => "layout.html",
         :use_xserver => true,
-        :footer => { 
+        :footer => {
           :right => "#{Date.today.year}",
           :font_size => 8,
           :spacing => 8
@@ -209,9 +213,9 @@ You can put your default configuration, applied to all pdf's at "configure_wisep
           :bottom => 15
         }
       }
-      
+
     end
-      
+
 ### Problems with with wkhtmltopdf-0.10 and above?
 
 If you experience problems with wkhtmltopdf-0.10 and above like getting `Broken Pipe` error or something similar, then you probably should compile wkhtmltopdf from source.
@@ -238,7 +242,7 @@ However, the wisepdf_* helpers will use file:// paths for assets when using :sho
 
     <%= params[:debug].present? ? image_tag('foo') : wisepdf_image_tag('foo') %>
 
-## Production?  
+## Production?
 
 **wisepdf** is used at:
 

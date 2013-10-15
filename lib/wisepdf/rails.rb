@@ -3,7 +3,7 @@ module Wisepdf
     if ::Rails::VERSION::MAJOR == 2
       require 'wisepdf/rails/legacy'
     elsif ::Rails::VERSION::MAJOR > 2
-      if ::Rails::VERSION::MINOR < 1
+      if ::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR < 1
         require 'wisepdf/rails/railtie'
       else
         require 'wisepdf/rails/engine'
