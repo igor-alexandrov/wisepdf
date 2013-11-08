@@ -51,4 +51,25 @@ class ConfigurationTest < Test::Unit::TestCase
       assert_equal 15, Wisepdf::Configuration.options[:margin][:bottom]
     end
   end
+
+  context "Asset pipeline configuration" do
+    setup do
+      Wisepdf::Configuration.reset!
+    end
+
+    should "use the asset pipeline if assets.enabled is nil" do
+      ::Rails.configuration.assets.enabled = nil
+      assert(Wisepdf::Configuration.use_asset_pipeline?)
+    end
+
+    should "use the asset pipeline if assets.enabled is true" do
+      ::Rails.configuration.assets.enabled = true
+      assert(Wisepdf::Configuration.use_asset_pipeline?)
+    end
+
+    should "not use the asset pipeline if assets.enabled is false" do
+      ::Rails.configuration.assets.enabled = false
+      assert(!Wisepdf::Configuration.use_asset_pipeline?)
+    end
+  end
 end
