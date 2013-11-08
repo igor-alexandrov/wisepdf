@@ -21,6 +21,12 @@ module Wisepdf
         yield self
       end
 
+      def use_asset_pipeline?
+        return true if ::Rails.configuration.assets.enabled.nil?
+
+        !!(::Rails.configuration.assets.enabled)
+      end
+
       def reset!
         @options = {
           :encoding => "UTF-8",
