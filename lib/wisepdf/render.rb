@@ -4,32 +4,35 @@ module Wisepdf
   module Render
     def self.included(base)
       base.class_eval do
+        alias_method_chain :render, :wisepdf
+        alias_method_chain :render_to_string, :wisepdf
         after_filter :clean_temp_files
       end
     end
 
-    def render(options = nil, *args, &block)
+    def render_with_wisepdf(options = nil, *args, &block)
       if options.is_a?(Hash) && options.has_key?(:pdf)
         options = self.default_pdf_render_options.merge(options)
-        super(options.merge(:content_type => "text/html"), *args, &block) and return if options[:show_as_html]
+        render_without_wisepdf(options.merge(:content_type => "text/html"), *args, &block) and return if options[:show_as_html]
 
         self.log_pdf_creation
         self.make_and_send_pdf(options)
       else
-        super
+        render_without_wisepdf(options, *args, &block)
       end
     end
 
-    def render_to_string(options = nil, *args, &block)
+    def render_to_string_with_wisepdf(options = nil, *args, &block)
       if options.is_a?(Hash) && options.has_key?(:pdf)
         self.log_pdf_creation
         self.make_pdf(self.default_pdf_render_options.merge(options))
       else
-        super
+        render_to_string_without_wisepdf(options, *args, &block)
       end
     end
 
-    protected
+  protected
+
     def log_pdf_creation
       logger.info '*'*15 + 'WISEPDF' + '*'*15
     end
