@@ -22,11 +22,15 @@ More information about [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) coul
 
 Add this to your Gemfile:
 
-    gem 'wisepdf'
+```ruby
+gem 'wisepdf'
+```
 
 if you don't already have wkhtmltopdf installed on your machine you can get up and running quickly by adding this to your Gemfile:
 
-    gem 'wkhtmltopdf-binary'
+```ruby
+gem 'wkhtmltopdf-binary'
+```
 
 then do:
 
@@ -36,89 +40,93 @@ then do:
 
 ### Basic Usage
 
-    class ThingsController < ApplicationController
-      def show
-        respond_to do |format|
-          format.html
-          format.pdf do
-            render :pdf => "file_name"
-          end
-        end
+```ruby
+class ThingsController < ApplicationController
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "file_name"
       end
     end
+  end
+end
+```
 
 ### Advanced Usage with all available options
 
-    class ThingsController < ApplicationController
-      def show
-        respond_to do |format|
-          format.html
-          format.pdf do
-            render :pdf                            => 'file_name',
-                   :template                       => 'things/show.pdf.erb',
-                   :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
-                   :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
-                   :orientation                    => 'Landscape',                  # default Portrait
-                   :page_size                      => 'A4, Letter, ...',            # default A4
-                   :save_to_file                   => Rails.root.join('pdfs', "#{filename}.pdf"),
-                   :save_only                      => false,                        # depends on :save_to_file being set first
-                   :proxy                          => 'TEXT',
-                   :basic_auth                     => false                         # when true username & password are automatically sent from session
-                   :username                       => 'TEXT',
-                   :password                       => 'TEXT',
-                   :cover                          => 'URL',
-                   :dpi                            => 'dpi',
-                   :encoding                       => 'TEXT',
-                   :user_style_sheet               => 'URL',
-                   :cookie                         => ['_session_id SESSION_ID'], # could be an array or a single string in a 'name value' format
-                   :post                           => ['query QUERY_PARAM'],    # could be an array or a single string in a 'name value' format
-                   :redirect_delay                 => NUMBER,
-                   :zoom                           => FLOAT,
-                   :page_offset                    => NUMBER,
-                   :book                           => true,
-                   :default_header                 => true,
-                   :disable_javascript             => false,
-                   :greyscale                      => true,
-                   :lowquality                     => true,
-                   :enable_plugins                 => true,
-                   :disable_internal_links         => true,
-                   :disable_external_links         => true,
-                   :print_media_type               => true,
-                   :disable_smart_shrinking        => true,
-                   :use_xserver                    => true,
-                   :no_background                  => true,
-                   :margin => {:top                => SIZE,                         # default 10 (mm)
-                               :bottom             => SIZE,
-                               :left               => SIZE,
-                               :right              => SIZE},
-                   :header => {:html => { :template => 'users/header.pdf.erb',  # use :template OR :url
-                                          :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
-                                          :url      => 'www.example.com',
-                                          :locals   => { :foo => @bar }},
-                               :center             => 'TEXT',
-                               :font_name          => 'NAME',
-                               :font_size          => SIZE,
-                               :left               => 'TEXT',
-                               :right              => 'TEXT',
-                               :spacing            => REAL,
-                               :line               => true},
-                   :footer => {:html => { :template => 'shared/footer.pdf.erb', # use :template OR :url
-                                          :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
-                                          :url      => 'www.example.com',
-                                          :locals   => { :foo => @bar }},
-                               :center             => 'TEXT',
-                               :font_name          => 'NAME',
-                               :font_size          => SIZE,
-                               :left               => 'TEXT',
-                               :right              => 'TEXT',
-                               :spacing            => REAL,
-                               :line               => true},
-                   :outline => {:outline           => true,
-                                :outline_depth     => LEVEL}
-          end
-        end
+```ruby
+class ThingsController < ApplicationController
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf                            => 'file_name',
+               :template                       => 'things/show.pdf.erb',
+               :layout                         => 'pdf.html',                   # use 'pdf.html' for a pdf.html.erb file
+               :show_as_html                   => params[:debug].present?,      # allow debuging based on url param
+               :orientation                    => 'Landscape',                  # default Portrait
+               :page_size                      => 'A4, Letter, ...',            # default A4
+               :save_to_file                   => Rails.root.join('pdfs', "#{filename}.pdf"),
+               :save_only                      => false,                        # depends on :save_to_file being set first
+               :proxy                          => 'TEXT',
+               :basic_auth                     => false                         # when true username & password are automatically sent from session
+               :username                       => 'TEXT',
+               :password                       => 'TEXT',
+               :cover                          => 'URL',
+               :dpi                            => 'dpi',
+               :encoding                       => 'TEXT',
+               :user_style_sheet               => 'URL',
+               :cookie                         => ['_session_id SESSION_ID'], # could be an array or a single string in a 'name value' format
+               :post                           => ['query QUERY_PARAM'],    # could be an array or a single string in a 'name value' format
+               :redirect_delay                 => NUMBER,
+               :zoom                           => FLOAT,
+               :page_offset                    => NUMBER,
+               :book                           => true,
+               :default_header                 => true,
+               :disable_javascript             => false,
+               :greyscale                      => true,
+               :lowquality                     => true,
+               :enable_plugins                 => true,
+               :disable_internal_links         => true,
+               :disable_external_links         => true,
+               :print_media_type               => true,
+               :disable_smart_shrinking        => true,
+               :use_xserver                    => true,
+               :no_background                  => true,
+               :margin => {:top                => SIZE,                         # default 10 (mm)
+                           :bottom             => SIZE,
+                           :left               => SIZE,
+                           :right              => SIZE},
+               :header => {:html => { :template => 'users/header.pdf.erb',  # use :template OR :url
+                                      :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
+                                      :url      => 'www.example.com',
+                                      :locals   => { :foo => @bar }},
+                           :center             => 'TEXT',
+                           :font_name          => 'NAME',
+                           :font_size          => SIZE,
+                           :left               => 'TEXT',
+                           :right              => 'TEXT',
+                           :spacing            => REAL,
+                           :line               => true},
+               :footer => {:html => { :template => 'shared/footer.pdf.erb', # use :template OR :url
+                                      :layout   => 'pdf_plain.html',        # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
+                                      :url      => 'www.example.com',
+                                      :locals   => { :foo => @bar }},
+                           :center             => 'TEXT',
+                           :font_name          => 'NAME',
+                           :font_size          => SIZE,
+                           :left               => 'TEXT',
+                           :right              => 'TEXT',
+                           :spacing            => REAL,
+                           :line               => true},
+               :outline => {:outline           => true,
+                            :outline_depth     => LEVEL}
       end
     end
+  end
+end
+```
 
 By default, it will render without a layout (:layout => false) and the template for the current controller and action.
 
@@ -126,94 +134,106 @@ By default, it will render without a layout (:layout => false) and the template 
 
 If you need to just create a pdf and not display it:
 
-    # create a pdf from a string
-    pdf = Wisepdf::Writer.new.to_pdf('<h1>Hello There!</h1>')
+```ruby
+# create a pdf from a string
+pdf = Wisepdf::Writer.new.to_pdf('<h1>Hello There!</h1>')
 
-    # or from your controller, using views & templates and all other options as normal
-    pdf = render_to_string :pdf => "some_file_name"
+# or from your controller, using views & templates and all other options as normal
+pdf = render_to_string :pdf => "some_file_name"
 
-    # then save to a file
-    save_path = Rails.root.join('pdfs','filename.pdf')
-    File.open(save_path, 'wb') do |file|
-      file << pdf
-    end
+# then save to a file
+save_path = Rails.root.join('pdfs','filename.pdf')
+File.open(save_path, 'wb') do |file|
+  file << pdf
+end
+```
 
 If you need to display utf encoded characters, add this to your pdf views or layouts:
 
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+```html
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+```
 
 ### Styles
 
 You must define absolute paths to CSS files, images, and javascripts; the best option is to use the *wisepdf_stylesheet_tag*, *wisepdf_image_tag*, and *wisepdf_javascript_tag* helpers.
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-      <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <%= wisepdf_stylesheet_tag "pdf" -%>
-        <%= wisepdf_javascript_tag "number_pages" %>
-      </head>
-      <body onload='number_pages'>
-        <div id="header">
-          <%= wisepdf_image_tag 'mysite.jpg' %>
-        </div>
-        <div id="content">
-          <%= yield %>
-        </div>
-      </body>
-    </html>
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%= wisepdf_stylesheet_tag "pdf" -%>
+    <%= wisepdf_javascript_tag "number_pages" %>
+  </head>
+  <body onload='number_pages'>
+    <div id="header">
+      <%= wisepdf_image_tag 'mysite.jpg' %>
+    </div>
+    <div id="content">
+      <%= yield %>
+    </div>
+  </body>
+</html>
+```
 
 ### Page Numbering
 
 A bit of javascript can help you number your pages. Create a template or header/footer file with this:
 
-    <html>
-      <head>
-        <script>
-          function number_pages() {
-            var vars={};
-            var x=document.location.search.substring(1).split('&');
-            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
-            for(var i in x) {
-              var y = document.getElementsByClassName(x[i]);
-              for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-            }
-          }
-        </script>
-      </head>
-      <body onload="number_pages()">
-        Page <span class="page"></span> of <span class="topage"></span>
-      </body>
-    </html>
+```html
+<html>
+  <head>
+    <script>
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+    </script>
+  </head>
+  <body onload="number_pages()">
+    Page <span class="page"></span> of <span class="topage"></span>
+  </body>
+</html>
+```
 
 Anything with a class listed in "var x" above will be auto-filled at render time.
 
 If you do not have explicit page breaks (and therefore do not have any "page" class), you can also use wkhtmltopdf's built in page number generation by setting one of the headers to "[page]":
 
-    render :pdf => 'filename', :header => { :right => '[page] of [topage]' }
+```ruby
+render :pdf => 'filename', :header => { :right => '[page] of [topage]' }
+```
 
 ### Configuration
 
 You can put your default configuration, applied to all pdf's at "configure_wisepdf.rb" initializer.
 
-    Wisepdf::Configuration.configure do |c|
-      c.wkhtmltopdf = '/path/to/wkhtmltopdf'
-      c.options = {
-        :layout => "layout.html",
-        :use_xserver => true,
-        :footer => {
-          :right => "#{Date.today.year}",
-          :font_size => 8,
-          :spacing => 8
-        },
-        :margin => {
-          :bottom => 15
-        }
-      }
+```ruby
+Wisepdf::Configuration.configure do |c|
+  c.wkhtmltopdf = '/path/to/wkhtmltopdf'
+  c.options = {
+    :layout => "layout.html",
+    :use_xserver => true,
+    :footer => {
+      :right => "#{Date.today.year}",
+      :font_size => 8,
+      :spacing => 8
+    },
+    :margin => {
+      :bottom => 15
+    }
+  }
 
-    end
+end
+```
 
 ### Problems with with wkhtmltopdf-0.10 and above?
 
@@ -239,8 +259,9 @@ First of all you must configure the render parameter `:show_as_html => params[:d
 
 However, the wisepdf_* helpers will use file:// paths for assets when using :show_as_html, and your browser's cross-domain safety feature will kick in, and not render them. To get around this, you can load your assets like so in your templates:
 
-    <%= params[:debug].present? ? image_tag('foo') : wisepdf_image_tag('foo') %>
-
+```html
+<%= params[:debug].present? ? image_tag('foo') : wisepdf_image_tag('foo') %>
+```
 ## Production?
 
 **wisepdf** is used at:
