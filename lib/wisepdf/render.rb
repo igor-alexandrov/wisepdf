@@ -4,9 +4,16 @@ module Wisepdf
   module Render
     def self.included(base)
       base.class_eval do
-        alias_method_chain :render, :wisepdf
-        alias_method_chain :render_to_string, :wisepdf
-        after_filter :clean_temp_files
+        # alias_method_chain :render, :wisepdf
+        # alias_method_chain :render_to_string, :wisepdf
+
+        alias_method :render_without_wisepdf, :render
+        alias_method :render, :render_with_wisepdf
+
+        alias_method :render_to_string_without_wisepdf, :render_to_string
+        alias_method :render_to_string, :render_to_string_with_wisepdf
+
+        after_action :clean_temp_files
       end
     end
 
