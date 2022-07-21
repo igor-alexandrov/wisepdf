@@ -135,7 +135,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.38)
+    tzinfo (0.3.61)
     webmock (1.9.3)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
